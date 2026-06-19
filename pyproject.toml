@@ -4,7 +4,7 @@ version = "0.1.0"
 description = "Add your description here"
 readme = "README.md"
 requires-python = ">=3.14"
-dependencies = ["fasb"]
+dependencies = ["fasb", "lab"]
 
 [build-system]
 # hatchling-based
@@ -13,6 +13,9 @@ build-backend = "hatchling.build"
 
 [tool.uv.sources]
 fasb = { path = "../fasb", editable = true }
+
+[tool.uv.workspace]
+members = []
 
 [tool.uv]
 package = false
