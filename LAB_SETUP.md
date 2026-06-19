@@ -4,7 +4,7 @@
 
 Benchmarks can be found here:
 
-<https://github.com/aibasel/downward-benchmarks>2
+<https://github.com/aibasel/downward-benchmarks>
 
 1. Choose one of the following domains:
 
