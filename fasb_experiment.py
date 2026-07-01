@@ -25,10 +25,12 @@ class BaseReport(AbsoluteReport):
 
 PROJECT_DIR = os.path.dirname(os.path.abspath(__file__))
 BENCHMARKS_DIR = os.environ["DOWNWARD_BENCHMARKS"]
+LP_BENCHMARKS_DIR = "/home/jan/Coding/Uni/planpilot/"
 FASB_BINARY = os.environ["FASB_BINARY"]
 FASB_SCRIPT = os.path.join(PROJECT_DIR, "fasb_script.fsb")
 ENV = LocalEnvironment(processes=2)
 SUITE = ["blocks:probBLOCKS-4-0.pddl", "blocks:probBLOCKS-4-1.pddl", "blocks:probBLOCKS-4-2.pddl"]
+LP_SUITE = ["blocks.lp"]
 ATTRIBUTES = [
     "error",
     "plan",
@@ -46,11 +48,12 @@ exp.add_parser(FasbParser())
 
 # TODO: Before the runs, following needs to be done:
 # - pddl files need to be converted to lp files using planpilot
-# - using fastdownward we can calculate the horizon of a pddl problem
+# - using fastdownward we can calculate the horizon of a pddl problem (store in JSON)
 # - that horizon needs to be written into the first line of the lp file
 # - the lp file is then ready to be passed to the fasb run
+# - python env is copied
 
-for task in suites.build_suite(BENCHMARKS_DIR, SUITE):
+for task in suites.build_suite(LP_BENCHMARKS_DIR, LP_SUITE):
     run = exp.add_run()
     run.add_resource("fasb_binary", FASB_BINARY, symlink=True)
     run.add_resource("script", FASB_SCRIPT, symlink=True)

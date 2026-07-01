@@ -1,0 +1,10 @@
+{
+    "horizons": {
+        "probBLOCKS-4-0": 6,
+        "probBLOCKS-4-1": 10,
+        "probBLOCKS-4-2": 6,
+        "probBLOCKS-5-0": 12,
+        "probBLOCKS-5-1": 10,
+        "probBLOCKS-5-2": 16,
+    }
+}
