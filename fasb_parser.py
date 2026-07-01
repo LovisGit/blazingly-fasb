@@ -4,18 +4,19 @@ from lab.parser import Parser
 
 
 def error(content, props):
-    if props["planner_exit_code"] == 0:
+    exit_code = props.get("planner_exit_code", -1)
+    if exit_code == 0:
         props["error"] = "plan-found"
     else:
         props["error"] = "unsolvable-or-error"
 
 
 def coverage(content, props):
-    props["coverage"] = int(props["planner_exit_code"] == 0)
+    props["coverage"] = int(props.get("planner_exit_code", -1) == 0)
 
 
 def get_plan(content, props):
-    match = re.search(r":: @\n(.+)", content)
+    match = re.search(r"::\x1b\[[0-9;]*m @\n(.+)", content)
     if match:
         atoms = match.group(1).strip().split()
         if atoms:
@@ -24,7 +25,7 @@ def get_plan(content, props):
 
 def get_times(content, props):
     times = []
-    for m in re.finditer(r"(\d+\.?\d*)\s*(µs|ms|s)", content):
+    for m in re.finditer(r"(\d+\.?\d*)\s*(µs|ms|(?<!\w)s(?=\s|\Z))", content):
         value = float(m.group(1))
         unit = m.group(2)
         if unit == "µs":
@@ -49,13 +50,14 @@ class FasbParser(Parser):
     def __init__(self):
         super().__init__()
         self.add_pattern(
-            "node", r"node: (.+)\n", type=str, file="driver.log", required=True
+            "node", r"node: (.+)$", type=str, file="driver.log", required=True, flags="M"
         )
         self.add_pattern(
             "planner_exit_code",
-            r"run-planner exit code: (.+)\n",
+            r"exit code: (-?\d+)$",
             type=int,
             file="driver.log",
+            flags="M",
         )
         self.add_function(error)
         self.add_function(coverage)
