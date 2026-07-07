@@ -219,3 +219,6 @@ __marimo__/
 
 # Custom
 .DS_Store
+test.lp
+.vscode/
+.python-version
