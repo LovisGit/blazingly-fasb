@@ -1,0 +1,17 @@
+// navigate.fsb — navigation primitives (NEW word-based syntax).
+// Commands: propose (next step), step (take step), route (show route),
+//           undo (undo last), clear (clear route).
+// Sequence: propose, step, show route, step again, undo, clear.
+propose
+step
+route
+step
+route
+undo
+route
+step
+step
+route
+clear
+route
+:q

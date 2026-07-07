@@ -1,0 +1,17 @@
+{
+  "description": "Pure ASP 3-coloring of a cycle C_n plus two fixed chord edges (1-4, 2-5). Size = N (nodes).",
+  "scripts": [
+    {"name": "inspect",  "path": "../../../scripts/inspect.fsb"},
+    {"name": "counts",   "path": "../../../scripts/counts.fsb"},
+    {"name": "enum",     "path": "../../../scripts/enum.fsb"},
+    {"name": "reason",   "path": "../../../scripts/reason.fsb"},
+    {"name": "navigate", "path": "../../../scripts/navigate.fsb"},
+    {"name": "loop",     "path": "../../../scripts/loop.fsb"},
+    {"name": "all",      "path": "../../../scripts/all.fsb"}
+  ],
+  "instances": [
+    {"size": 10, "program": "n10.lp"},
+    {"size": 12, "program": "n12.lp"},
+    {"size": 14, "program": "n14.lp"}
+  ]
+}

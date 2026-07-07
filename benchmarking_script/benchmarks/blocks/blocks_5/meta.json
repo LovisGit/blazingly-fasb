@@ -1,0 +1,17 @@
+{
+  "description": "blocksworld 5 blocks (probBLOCKS-5-0). heavier search space.",
+  "scripts": [
+    {"name": "inspect",  "path": "../../../scripts/inspect.fsb"},
+    {"name": "counts",   "path": "../../../scripts/counts.fsb"},
+    {"name": "enum",     "path": "../../../scripts/enum.fsb"},
+    {"name": "reason",   "path": "../../../scripts/reason.fsb"},
+    {"name": "navigate", "path": "../../../scripts/navigate.fsb"},
+    {"name": "loop",     "path": "../../../scripts/loop.fsb"},
+    {"name": "all",      "path": "../../../scripts/all.fsb"}
+  ],
+  "instances": [
+    {"size": 13, "program": "horizon13.lp"},
+    {"size": 14, "program": "horizon14.lp"},
+    {"size": 16, "program": "horizon16.lp"}
+  ]
+}

@@ -1,0 +1,7 @@
+// enum.fsb — answer-set enumeration commands (NEW word-based syntax).
+// Commands: solve n (enumerate n AS), solve (all AS), solve* (projected AS).
+solve 1
+solve 5
+solve
+solve*
+:q

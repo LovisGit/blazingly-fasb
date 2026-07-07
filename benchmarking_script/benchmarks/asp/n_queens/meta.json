@@ -1,0 +1,17 @@
+{
+  "description": "Pure ASP n-queens. Size = N (board side). Answer-set count grows fast: N=7→40, N=8→92, N=9→352.",
+  "scripts": [
+    {"name": "inspect",  "path": "../../../scripts/inspect.fsb"},
+    {"name": "counts",   "path": "../../../scripts/counts.fsb"},
+    {"name": "enum",     "path": "../../../scripts/enum.fsb"},
+    {"name": "reason",   "path": "../../../scripts/reason.fsb"},
+    {"name": "navigate", "path": "../../../scripts/navigate.fsb"},
+    {"name": "loop",     "path": "../../../scripts/loop.fsb"},
+    {"name": "all",      "path": "../../../scripts/all.fsb"}
+  ],
+  "instances": [
+    {"size": 7, "program": "n07.lp"},
+    {"size": 8, "program": "n08.lp"},
+    {"size": 9, "program": "n09.lp"}
+  ]
+}

@@ -1,0 +1,38 @@
+// all.fsb — comprehensive sweep of safely-invokable commands (NEW word-based syntax).
+// Order: inspect → count → enumerate → reason → navigate → loop → quit.
+// (Skipped: activate FACET, :isatom, sig literal regex, wcount/wcounts, :m, :mode — need
+//  problem-specific atoms/literals/weights or are not implemented in current fasb.)
+//
+// inspect
+:atoms
+facets
+count
+solvecount
+:filter_atoms occurs
+:src
+// counting
+counts
+solvecounts
+compute occurs
+// enumeration
+solve 1
+solve 5
+solve*
+// reasoning
+|= %
+|= %%
+|=
+// navigation
+propose
+step
+route
+step
+route
+undo
+step
+step
+clear
+// while loop (new syntax: while <metric> <op> <n> do cmd1 ; cmd2 ; ...)
+while #facets > 5 do step ; facets
+route
+:q

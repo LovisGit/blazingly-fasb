@@ -1,0 +1,9 @@
+// reason.fsb — reasoning / entailment commands (NEW word-based syntax).
+// Commands: |= (per-atom brave-consequence check; verbose, computes per atom),
+//           |= %  (cautious consequences = landmarks),
+//           |= %% (atoms not in any AS = impossibles).
+// Note: |= keeps its symbol; % / %% here are sub-flags to |=, not the sig command.
+|= %
+|= %%
+|=
+:q

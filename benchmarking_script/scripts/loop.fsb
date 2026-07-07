@@ -1,0 +1,10 @@
+// loop.fsb — fasb while-loop construct (NEW word-based syntax).
+// Syntax: while <metric> <op> <n> do cmd1 ; cmd2 ; ...
+//   op:     != > >= < <=
+//   metric: #facets (= 2 * facets.len()), #route (route length)
+// Walks the navigation tree: take a step while #facets > 5, show facets each iteration.
+while #facets > 5 do step ; facets
+route
+count
+solvecount
+:q

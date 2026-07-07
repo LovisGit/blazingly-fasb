@@ -1,0 +1,11 @@
+// counts.fsb — counting commands (NEW word-based syntax).
+// Heavy: each iterates over every facet.
+// Commands: count (facet count), solvecount (AS count),
+//           counts (facet-counts weights), solvecounts (AS-counts weights),
+//           compute regex (compute facets matching regex).
+count
+solvecount
+counts
+solvecounts
+compute occurs
+:q
