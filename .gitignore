@@ -222,3 +222,4 @@ __marimo__/
 test.lp
 .vscode/
 .python-version
+version_*.json
