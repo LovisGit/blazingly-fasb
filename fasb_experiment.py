@@ -9,6 +9,7 @@ from lab.environments import LocalEnvironment
 from lab.experiment import Experiment
 from lab.reports import Attribute, geometric_mean
 
+from fasb_environment import BWUniEnvironment
 from fasb_parser import FasbParser
 
 
@@ -31,7 +32,10 @@ LP_BENCHMARKS_DIR =  os.path.join(PROJECT_DIR, "benchmarks/")
 FASB_RUNNER = os.path.join(PROJECT_DIR, "fasb_benchmark_runner.py")
 FASB_SCRIPT = os.path.join(PROJECT_DIR, "fasb_script.fsb")
 HORIZONS = os.path.join(PROJECT_DIR, "horizons.json")
-ENV = LocalEnvironment(processes=2)
+
+LOCAL_ENV = LocalEnvironment(processes=2)
+BW_ENV = BWUniEnvironment()
+
 #SUITE = ["blocks:probBLOCKS-4-0.pddl", "blocks:probBLOCKS-4-1.pddl", "blocks:probBLOCKS-4-2.pddl"]
 LP_SUITE = [
     ":probBLOCKS-4-0.lp",
@@ -53,7 +57,7 @@ TIME_LIMIT = 1800
 MEMORY_LIMIT = 2048
 
 
-exp = Experiment(environment=ENV)
+exp = Experiment(environment=LOCAL_ENV)
 exp.add_parser(FasbParser())
 
 # TODO: Before the runs, following needs to be done:
