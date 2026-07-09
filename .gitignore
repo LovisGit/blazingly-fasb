@@ -223,3 +223,5 @@ test.lp
 .vscode/
 .python-version
 version_*.json
+# lab
+data/
