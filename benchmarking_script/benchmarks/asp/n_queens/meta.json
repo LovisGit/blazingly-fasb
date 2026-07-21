@@ -7,7 +7,8 @@
     {"name": "reason",   "path": "../../../scripts/reason.fsb"},
     {"name": "navigate", "path": "../../../scripts/navigate.fsb"},
     {"name": "loop",     "path": "../../../scripts/loop.fsb"},
-    {"name": "all",      "path": "../../../scripts/all.fsb"}
+    {"name": "all",      "path": "../../../scripts/all.fsb"},
+    {"name": "heavy",    "path": "../../../scripts/heavy.fsb"}
   ],
   "instances": [
     {"size": 7, "program": "n07.lp"},

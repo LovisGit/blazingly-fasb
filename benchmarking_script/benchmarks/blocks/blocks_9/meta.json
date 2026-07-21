@@ -1,5 +1,5 @@
 {
-  "description": "logistics PDDL (LOGISTICS-4-0): 2 cities, 2 trucks, 1 plane, 6 packages. New domain — transportation/routing structure differs from gripper/blocks.",
+  "description": "blocksworld 9 blocks (probBLOCKS-9-0). 7-block initial tower, 8-block goal tower; ~162 operators.",
   "scripts": [
     {"name": "inspect",  "path": "../../../scripts/inspect.fsb"},
     {"name": "counts",   "path": "../../../scripts/counts.fsb"},
@@ -11,8 +11,8 @@
     {"name": "heavy",    "path": "../../../scripts/heavy.fsb"}
   ],
   "instances": [
-    {"size": 17, "program": "horizon17.lp"},
-    {"size": 18, "program": "horizon18.lp"},
-    {"size": 19, "program": "horizon19.lp"}
+    {"size": 30, "program": "horizon30.lp"},
+    {"size": 32, "program": "horizon32.lp"},
+    {"size": 34, "program": "horizon34.lp"}
   ]
 }

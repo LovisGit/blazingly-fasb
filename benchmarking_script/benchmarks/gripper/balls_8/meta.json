@@ -1,5 +1,5 @@
 {
-  "description": "logistics PDDL (LOGISTICS-4-0): 2 cities, 2 trucks, 1 plane, 6 packages. New domain — transportation/routing structure differs from gripper/blocks.",
+  "description": "gripper PDDL, 8 balls (prob03). Optimal horizon 23; ~66 operators.",
   "scripts": [
     {"name": "inspect",  "path": "../../../scripts/inspect.fsb"},
     {"name": "counts",   "path": "../../../scripts/counts.fsb"},
@@ -11,8 +11,8 @@
     {"name": "heavy",    "path": "../../../scripts/heavy.fsb"}
   ],
   "instances": [
-    {"size": 17, "program": "horizon17.lp"},
-    {"size": 18, "program": "horizon18.lp"},
-    {"size": 19, "program": "horizon19.lp"}
+    {"size": 21, "program": "horizon21.lp"},
+    {"size": 22, "program": "horizon22.lp"},
+    {"size": 23, "program": "horizon23.lp"}
   ]
 }

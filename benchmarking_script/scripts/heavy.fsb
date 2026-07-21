@@ -1,0 +1,12 @@
+// heavy.fsb — only the computationally expensive commands.
+// Covers: significance computation (solvecounts), full AS enumeration,
+// brave/cautious consequence reasoning per atom, and projected enumeration.
+// Warning: these are O(#AS × #facets) or worse. Expect long runtimes on
+// large instances (blocks_7+, gripper balls_8+).
+solvecounts
+|= %
+|= %%
+|=
+solve
+solve*
+:q
