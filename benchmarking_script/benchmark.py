@@ -21,7 +21,8 @@ meta.json (optional, overrides auto-discovery):
 
 Usage:
   benchmark.py run     [--benchmarks DIR] [-k 5] [--warmup 1] [--out results.json]
-                       [--fasb PATH] [--timeout SEC] [--filter REGEX] [--clingo-models N]
+                       [--fasb PATH] [--fasb-args='--fast -v'] [--timeout SEC]
+                       [--filter REGEX] [--clingo-models N]
   benchmark.py show    RESULTS_JSON [-v]
   benchmark.py compare BASELINE_JSON CURRENT_JSON [--threshold 0.05]
 
@@ -33,6 +34,7 @@ import argparse
 import json
 import os
 import re
+import shlex
 import shutil
 import statistics
 import subprocess
@@ -54,16 +56,20 @@ MIN_OUTPUT_BYTES = 64  # a real script run emits KBs; a banner-only no-op ~19 B
 
 # ---------- running ----------
 
-def run_once(fasb, program, script, clingo_models, timeout, sample_hz, driver="arg"):
+def run_once(fasb, program, script, clingo_models, timeout, sample_hz, driver="arg",
+             fasb_args=()):
     """Run fasb once, sampling memory until it exits. Returns a result dict.
 
     driver controls how the script reaches the binary:
       "arg"   -> passed as a positional file argument (interpreter builds)
       "stdin" -> piped to stdin, like typing into the REPL (repl builds)
-    Stdout is captured only to count bytes, so an empty run (binary did
-    nothing) can be flagged instead of counting as a fast success.
+    fasb_args are extra flags (e.g. ("--fast",)). fasb's own arg parser
+    always takes argv[1] as the logic program path, and for the "arg"
+    driver the script must be the last argument (see bin.rs), so flags
+    are inserted between clingo_models and the script, never before
+    program or after script.
     """
-    cmd = [fasb, str(program), str(clingo_models)]
+    cmd = [fasb, str(program), str(clingo_models), *fasb_args]
     stdin = subprocess.DEVNULL
     script_f = None
     if script:
@@ -281,11 +287,15 @@ def cmd_run(args):
     if not problems:
         sys.exit(f"error: no problems found under {root}")
 
+    fasb_args = shlex.split(args.fasb_args) if args.fasb_args else []
+
     print(f"fasb benchmark  (k={args.k}, warmup={args.warmup}, timeout={args.timeout}s)")
     print(f"benchmarks: {root}")
     print(f"script:     {args.script or '(first in meta)'}"
           f"{'  dir=' + args.scripts_dir if args.scripts_dir else ''}"
           f"  driver={args.driver}")
+    if fasb_args:
+        print(f"fasb args:  {' '.join(fasb_args)}")
     print(f"problems:   {len(problems)}\n")
 
     results = []
@@ -304,9 +314,9 @@ def cmd_run(args):
 
             for _ in range(args.warmup):
                 run_once(fasb, program, script, args.clingo_models,
-                         args.timeout, args.sample_hz, args.driver)
+                         args.timeout, args.sample_hz, args.driver, fasb_args)
             runs = [run_once(fasb, program, script, args.clingo_models,
-                             args.timeout, args.sample_hz, args.driver)
+                             args.timeout, args.sample_hz, args.driver, fasb_args)
                     for _ in range(args.k)]
 
             summary = summarize(runs, args.min_output_bytes)
@@ -333,6 +343,7 @@ def cmd_run(args):
             "script": args.script,
             "scripts_dir": args.scripts_dir,
             "driver": args.driver,
+            "fasb_args": args.fasb_args,
         },
         "results": results,
     }
@@ -472,6 +483,10 @@ def main(argv):
                     help="output JSON path (default: results.json)")
     pr.add_argument("--fasb", default=None,
                     help="fasb binary path (default: search PATH)")
+    pr.add_argument("--fasb-args", default=None,
+                    help="extra flags passed to fasb, e.g. --fasb-args='--fast -v' "
+                         "(split like a shell line; use '=' since the value starts "
+                         "with '-', or argparse mistakes it for another option)")
     pr.add_argument("--filter", default=None,
                     help="regex; only run matching <domain>/<problem>")
     pr.add_argument("--script", default=None,
