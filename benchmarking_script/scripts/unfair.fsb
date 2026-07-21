@@ -1,0 +1,26 @@
+// unfair.fsb — isolates exactly the commands where --cache / --optimized pay off.
+// Section 1 — --optimized, via bare `|=`.
+|=
+|=
+|=
+|=
+
+// Section 2 — --optimized, via compute^ / !?soe.
+compute^ occurs
+compute^ occurs
+compute^ occurs
+
+// compute_facets_soe_projecting: legacy filters against a Vec<String> of cautious
+// consequences (O(n) contains() per atom); optimized collects them into a HashSet first
+!?soe occurs
+!?soe occurs
+!?soe occurs
+
+// Section 3 — --cache, via repeated `compute`.
+compute
+compute
+compute occurs
+compute
+compute occurs
+
+:q
