@@ -1,0 +1,18 @@
+{
+  "description": "Depot STRIPS planning (PDDL→SAS+ via Fast Downward→ASP via plasp, bounded encoding). Hoists move crates between pallets and trucks at depot/distributor locations. Horizon = plan-length bound. Light: p01 (h=10). Heavy: p05 (h=22).",
+  "scripts": [
+    {"name": "inspect",  "path": "../../../scripts/inspect.fsb"},
+    {"name": "counts",   "path": "../../../scripts/counts.fsb"},
+    {"name": "enum",     "path": "../../../scripts/enum.fsb"},
+    {"name": "reason",   "path": "../../../scripts/reason.fsb"},
+    {"name": "navigate", "path": "../../../scripts/navigate.fsb"},
+    {"name": "loop",     "path": "../../../scripts/loop.fsb"},
+    {"name": "all",      "path": "../../../scripts/all.fsb"},
+    {"name": "heavy",    "path": "../../../scripts/heavy.fsb"}
+  ],
+  "instances": [
+    {"size": 10, "program": "p01_h10.lp", "note": "problem 1, horizon 10 — light"},
+    {"size": 16, "program": "p03_h16.lp", "note": "problem 3, horizon 16 — medium"},
+    {"size": 22, "program": "p05_h22.lp", "note": "problem 5, horizon 22 — heavy"}
+  ]
+}

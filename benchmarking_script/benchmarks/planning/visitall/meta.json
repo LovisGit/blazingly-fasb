@@ -1,0 +1,19 @@
+{
+  "description": "Visit-all grid STRIPS planning (PDDL→ASP via plasp, bounded encoding). A robot visits every cell on an NxN grid. 'half' = start half-visited, 'full' = visit all cells. Horizon = plan-length bound.",
+  "scripts": [
+    {"name": "inspect",  "path": "../../../scripts/inspect.fsb"},
+    {"name": "counts",   "path": "../../../scripts/counts.fsb"},
+    {"name": "enum",     "path": "../../../scripts/enum.fsb"},
+    {"name": "reason",   "path": "../../../scripts/reason.fsb"},
+    {"name": "navigate", "path": "../../../scripts/navigate.fsb"},
+    {"name": "loop",     "path": "../../../scripts/loop.fsb"},
+    {"name": "all",      "path": "../../../scripts/all.fsb"},
+    {"name": "heavy",    "path": "../../../scripts/heavy.fsb"}
+  ],
+  "instances": [
+    {"size": 3,  "program": "p02half_h3.lp",  "note": "2x2 grid half-visited, horizon 3  — very light"},
+    {"size": 8,  "program": "p03half_h8.lp",  "note": "3x3 grid half-visited, horizon 8  — light"},
+    {"size": 9,  "program": "p03full_h9.lp",  "note": "3x3 grid fully visited, horizon 9  — medium"},
+    {"size": 12, "program": "p04half_h12.lp", "note": "4x4 grid half-visited, horizon 12 — medium-heavy"}
+  ]
+}
