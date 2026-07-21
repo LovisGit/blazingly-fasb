@@ -1,12 +1,16 @@
 // unfair.fsb — isolates exactly the commands where --cache / --optimized pay off.
+// Rebalanced: the first cut gave --optimized 10 commands vs --cache's 5, so cache's
+// real but per-call-small saving got diluted by solver noise on the other 2/3 of the
+// script and came out as pure noise in `compare` (geomean ~1.00, split evenly). Two
+// reps each are already enough to show --optimized's effect unambiguously; --cache
+// needs many more `compute` reps so its cumulative saving is a big enough share of
+// total wall time to rise above run-to-run solver variance on the heavier instances.
+
 // Section 1 — --optimized, via bare `|=`.
-|=
-|=
 |=
 |=
 
 // Section 2 — --optimized, via compute^ / !?soe.
-compute^ occurs
 compute^ occurs
 compute^ occurs
 
@@ -14,13 +18,22 @@ compute^ occurs
 // consequences (O(n) contains() per atom); optimized collects them into a HashSet first
 !?soe occurs
 !?soe occurs
-!?soe occurs
 
-// Section 3 — --cache, via repeated `compute`.
+// Section 3 — --cache, via repeated `compute`. Route/program never change across
+// these, so call 1 is a cold miss (2 real solves) and every call after is a
+// guaranteed LRU hit — more reps here means cache's cumulative saving dominates a
+// bigger share of the script instead of being lost in sections 1-2's noise.
 compute
 compute
 compute occurs
 compute
 compute occurs
+compute
+compute
+compute occurs
+compute
+compute occurs
+compute
+compute
 
 :q
