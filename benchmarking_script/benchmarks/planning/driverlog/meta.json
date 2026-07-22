@@ -9,11 +9,11 @@
     {"name": "loop",     "path": "../../../scripts/loop.fsb"},
     {"name": "all",      "path": "../../../scripts/all.fsb"},
     {"name": "heavy",    "path": "../../../scripts/heavy.fsb"},
-    {"name": "unfair",   "path": "../../../scripts/unfair.fsb"}
+    {"name": "unfair",   "path": "../../../scripts/unfair.fsb"},
+    {"name": "onlycounts",   "path": "../../../scripts/onlycounts.fsb"}
   ],
   "instances": [
     {"size": 8,  "program": "p01_h8.lp",  "note": "problem 1, horizon 8  — light (~120ms)"},
-    {"size": 12, "program": "p03_h12.lp", "note": "problem 3, horizon 12 — medium (~2s)"},
-    {"size": 16, "program": "p04_h16.lp", "note": "problem 4, horizon 16 — heavy (~8s with inspect)"}
+    {"size": 12, "program": "p03_h12.lp", "note": "problem 3, horizon 12 — medium (~2s)"}
   ]
 }

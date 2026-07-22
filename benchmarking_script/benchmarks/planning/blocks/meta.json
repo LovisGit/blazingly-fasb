@@ -9,7 +9,8 @@
     {"name": "loop",     "path": "../../../scripts/loop.fsb"},
     {"name": "all",      "path": "../../../scripts/all.fsb"},
     {"name": "heavy",    "path": "../../../scripts/heavy.fsb"},
-    {"name": "unfair",   "path": "../../../scripts/unfair.fsb"}
+    {"name": "unfair",   "path": "../../../scripts/unfair.fsb"},
+    {"name": "onlycounts",   "path": "../../../scripts/onlycounts.fsb"}
   ],
   "instances": [
     {"size": 8,  "program": "p04_h8.lp",  "note": "4 blocks, horizon 8  — light"},
