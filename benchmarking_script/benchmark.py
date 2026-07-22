@@ -1,33 +1,4 @@
 #!/usr/bin/env python3
-"""Local fasb benchmark runner — runtime and memory over k runs.
-
-Benchmark layout:
-  benchmarks/
-    <domain>/
-      <problem>/
-        meta.json        # optional
-        script.fsb       # optional shared script (first *.fsb is used)
-        *.lp             # one or more instances (size parsed from digits in name)
-
-meta.json (optional, overrides auto-discovery):
-  {
-    "description": "...",
-    "script": "script.fsb",
-    "instances": [
-      {"size": 10,  "program": "n10.lp"},
-      {"size": 100, "program": "n100.lp"}
-    ]
-  }
-
-Usage:
-  benchmark.py run     [--benchmarks DIR] [-k 5] [--warmup 1] [--out results.json]
-                       [--fasb PATH] [--fasb-args='--fast -v'] [--timeout SEC]
-                       [--filter REGEX] [--clingo-models N]
-  benchmark.py show    RESULTS_JSON [-v]
-  benchmark.py compare BASELINE_JSON CURRENT_JSON [--threshold 0.05]
-
-Requires: psutil  (pip install psutil)
-"""
 from __future__ import annotations
 
 import argparse
@@ -50,25 +21,14 @@ except ImportError:
 
 
 MB = 1024 * 1024
-SAMPLE_HZ = 200  # RSS polling rate while a run is alive (5 ms)
-MIN_OUTPUT_BYTES = 64  # a real script run emits KBs; a banner-only no-op ~19 B
+SAMPLE_HZ = 200  # RSS polling rate
+MIN_OUTPUT_BYTES = 64  # a real script run emits KBs
 
 
 # ---------- running ----------
 
 def run_once(fasb, program, script, clingo_models, timeout, sample_hz, driver="arg",
              fasb_args=()):
-    """Run fasb once, sampling memory until it exits. Returns a result dict.
-
-    driver controls how the script reaches the binary:
-      "arg"   -> passed as a positional file argument (interpreter builds)
-      "stdin" -> piped to stdin, like typing into the REPL (repl builds)
-    fasb_args are extra flags (e.g. ("--fast",)). fasb's own arg parser
-    always takes argv[1] as the logic program path, and for the "arg"
-    driver the script must be the last argument (see bin.rs), so flags
-    are inserted between clingo_models and the script, never before
-    program or after script.
-    """
     cmd = [fasb, str(program), str(clingo_models), *fasb_args]
     stdin = subprocess.DEVNULL
     script_f = None
@@ -151,14 +111,6 @@ def kill_tree(proc):
 
 
 def summarize(runs, min_output=MIN_OUTPUT_BYTES):
-    """Aggregate the successful runs of one instance.
-
-    A run must emit at least min_output stdout bytes to count. This guards
-    against "binary did nothing" runs (e.g. a REPL build fed the script the
-    wrong way) — those still print a short banner, so a >0 check is not
-    enough; real script work emits kilobytes. .get(..., min_output) keeps
-    older result files (no out_bytes field) valid.
-    """
     ok = [r for r in runs if not r["timed_out"] and r["exit_code"] == 0
           and r.get("out_bytes", min_output) >= min_output]
     if not ok:
@@ -181,13 +133,6 @@ def summarize(runs, min_output=MIN_OUTPUT_BYTES):
 # ---------- discovery ----------
 
 def resolve_script(problem_dir, meta, script_name, scripts_dir):
-    """Pick the script for a problem.
-
-    Supports both meta["script"] (singular path) and meta["scripts"]
-    (list of {name, path}). --script selects a named variant from the list;
-    --scripts-dir overrides the directory, keeping the chosen file's basename
-    (so e.g. scripts/all.fsb -> scripts_new/all.fsb).
-    """
     chosen = None
     if meta.get("script"):
         chosen = meta["script"]
@@ -211,7 +156,6 @@ def resolve_script(problem_dir, meta, script_name, scripts_dir):
 
 
 def discover(root, filter_re, script_name=None, scripts_dir=None):
-    """Yield {name, description, script, instances} for each problem dir."""
     if not root.exists():
         sys.exit(f"error: benchmarks dir not found: {root}")
 
@@ -385,7 +329,6 @@ def cmd_show(args):
 # ---------- compare command ----------
 
 def flatten(data):
-    """Map (problem_name, size) -> instance summary, for successful instances."""
     out = {}
     for prob in data.get("results", []):
         for inst in prob["instances"]:
