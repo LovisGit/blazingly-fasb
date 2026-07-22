@@ -24,8 +24,17 @@ Benchmarks can be found here:
 
 ## Convert to ASP
 
-We recommend using [PlanPilot](https://github.com/abcorrea/planpilot) for the conversion. You can
-use following command:
+### Using [plasb](https://github.com/potassco/plasp)
+
+You can use following command:
+
+```sh
+plasp translate domain.pddl problem.pddl > instance.lp
+```
+
+### Using [PlanPilot](https://github.com/abcorrea/planpilot)
+
+You can use following command:
 
 ```sh
 ./planpilot.py -i benchmarks/blocks/probBLOCKS-4-0.pddl --encoding bounded --horizon 10
