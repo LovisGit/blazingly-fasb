@@ -27,8 +27,7 @@ MIN_OUTPUT_BYTES = 64  # a real script run emits KBs
 
 # ---------- running ----------
 
-def run_once(fasb, program, script, clingo_models, timeout, sample_hz, driver="arg",
-             fasb_args=()):
+def run_once(fasb, program, script, clingo_models, timeout, sample_hz, driver="arg", fasb_args=()):
     cmd = [fasb, str(program), str(clingo_models), *fasb_args]
     stdin = subprocess.DEVNULL
     script_f = None
