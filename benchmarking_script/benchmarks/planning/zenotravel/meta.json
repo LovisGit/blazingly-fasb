@@ -1,5 +1,5 @@
 {
-  "description": "Driverlog STRIPS planning (PDDL→SAS+ via Fast Downward→ASP via plasp, bounded encoding). Trucks, drivers, and packages across locations. Horizon = plan-length bound. Light: p01 (h=8). Heavy: p04 (h=16, minimum SAT horizon, ~8s with inspect).",
+  "description": "Zeno-travel STRIPS planning (PDDL→SAS+ via Fast Downward→ASP via plasp, bounded encoding). Involves aircraft, passengers, cities, and fuel levels. Horizon = plan-length bound; larger values admit sub-optimal plans (exponentially more answer sets). Light: p01 (small). Heavy: p05 (h=20, ~13s with inspect).",
   "scripts": [
     {"name": "inspect",            "path": "../../../scripts/inspect.fsb"},
     {"name": "counts",             "path": "../../../scripts/counts.fsb"},
@@ -19,7 +19,8 @@
     {"name": "single_solvecounts", "path": "../../../scripts/single_solvecounts.fsb"}
   ],
   "instances": [
-    {"size": 8, "program": "p01_h8.lp", "note": "problem 1, horizon 8  — light (~120ms)"},
-    {"size": 12, "program": "p03_h12.lp", "note": "problem 3, horizon 12 — medium (~2s)"}
+    {"size": 10, "program": "p01_h10.lp", "note": "problem 1, horizon 10 — light (~130ms)"},
+    {"size": 14, "program": "p03_h14.lp", "note": "problem 3, horizon 14 — medium (~500ms)"},
+    {"size": 20, "program": "p05_h20.lp", "note": "problem 5, horizon 20 — heavy (~13s with inspect)"}
   ]
 }

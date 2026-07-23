@@ -1,5 +1,5 @@
 {
-  "description": "Driverlog STRIPS planning (PDDL→SAS+ via Fast Downward→ASP via plasp, bounded encoding). Trucks, drivers, and packages across locations. Horizon = plan-length bound. Light: p01 (h=8). Heavy: p04 (h=16, minimum SAT horizon, ~8s with inspect).",
+  "description": "gripper PDDL, 8 balls (prob03). Optimal horizon 23; ~66 operators.",
   "scripts": [
     {"name": "inspect",            "path": "../../../scripts/inspect.fsb"},
     {"name": "counts",             "path": "../../../scripts/counts.fsb"},
@@ -19,7 +19,8 @@
     {"name": "single_solvecounts", "path": "../../../scripts/single_solvecounts.fsb"}
   ],
   "instances": [
-    {"size": 8, "program": "p01_h8.lp", "note": "problem 1, horizon 8  — light (~120ms)"},
-    {"size": 12, "program": "p03_h12.lp", "note": "problem 3, horizon 12 — medium (~2s)"}
+    {"size": 21, "program": "horizon21.lp"},
+    {"size": 22, "program": "horizon22.lp"},
+    {"size": 23, "program": "horizon23.lp"}
   ]
 }

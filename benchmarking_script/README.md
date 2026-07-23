@@ -1,5 +1,17 @@
 # Benchmarker for fasb
 
+## Layout
+
+```
+benchmarks/<domain>/<problem>/   -- all benchmark problems (meta.json + .lp instances)
+scripts/                         -- all .fsb driver scripts, referenced by name from each meta.json
+```
+
+Every `meta.json` lists the same set of script variants (`inspect`, `counts`, `enum`, `reason`,
+`navigate`, `loop`, `all`, `heavy`, `unfair`, `onlycounts`, `single_cautious`, `single_count`,
+`single_counts`, `single_impossibles`, `single_solvecount`, `single_solvecounts`). Pick one with
+`--script NAME`, or point at an alternate scripts directory with `--scripts-dir DIR`.
+
 ## Quick start
 
 ```bash

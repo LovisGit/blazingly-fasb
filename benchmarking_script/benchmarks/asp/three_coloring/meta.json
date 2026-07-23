@@ -1,5 +1,5 @@
 {
-  "description": "Driverlog STRIPS planning (PDDL→SAS+ via Fast Downward→ASP via plasp, bounded encoding). Trucks, drivers, and packages across locations. Horizon = plan-length bound. Light: p01 (h=8). Heavy: p04 (h=16, minimum SAT horizon, ~8s with inspect).",
+  "description": "Pure ASP 3-coloring of a cycle C_n plus two fixed chord edges (1-4, 2-5). Size = N (nodes).",
   "scripts": [
     {"name": "inspect",            "path": "../../../scripts/inspect.fsb"},
     {"name": "counts",             "path": "../../../scripts/counts.fsb"},
@@ -19,7 +19,8 @@
     {"name": "single_solvecounts", "path": "../../../scripts/single_solvecounts.fsb"}
   ],
   "instances": [
-    {"size": 8, "program": "p01_h8.lp", "note": "problem 1, horizon 8  — light (~120ms)"},
-    {"size": 12, "program": "p03_h12.lp", "note": "problem 3, horizon 12 — medium (~2s)"}
+    {"size": 10, "program": "n10.lp"},
+    {"size": 12, "program": "n12.lp"},
+    {"size": 14, "program": "n14.lp"}
   ]
 }

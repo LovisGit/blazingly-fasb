@@ -1,5 +1,5 @@
 {
-  "description": "Driverlog STRIPS planning (PDDL→SAS+ via Fast Downward→ASP via plasp, bounded encoding). Trucks, drivers, and packages across locations. Horizon = plan-length bound. Light: p01 (h=8). Heavy: p04 (h=16, minimum SAT horizon, ~8s with inspect).",
+  "description": "Pure ASP n-queens. Size = N (board side). Answer-set count grows fast: N=7→40, N=8→92, N=9→352.",
   "scripts": [
     {"name": "inspect",            "path": "../../../scripts/inspect.fsb"},
     {"name": "counts",             "path": "../../../scripts/counts.fsb"},
@@ -19,7 +19,8 @@
     {"name": "single_solvecounts", "path": "../../../scripts/single_solvecounts.fsb"}
   ],
   "instances": [
-    {"size": 8, "program": "p01_h8.lp", "note": "problem 1, horizon 8  — light (~120ms)"},
-    {"size": 12, "program": "p03_h12.lp", "note": "problem 3, horizon 12 — medium (~2s)"}
+    {"size": 7, "program": "n07.lp"},
+    {"size": 8, "program": "n08.lp"},
+    {"size": 9, "program": "n09.lp"}
   ]
 }
