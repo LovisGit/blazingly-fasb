@@ -22,13 +22,13 @@ def collect_lp_files():
     for f in files:
         os.remove(f)
 
-    for run_dir in glob.glob("data/fasb_experiment/runs-*/*/"):
+    for run_dir in glob.glob("data/fasb_preprocess/runs-*/*/"):
         for lp in glob.glob(f"{run_dir}/*.pddl.lp"):
             out_name = lp.replace(".pddl.lp", ".lp")
             shutil.copy(lp, f"benchmarks/lp/{os.path.basename(out_name)}")
 
 def extract_horizons():
-    properties_path = f"data/fasb_experiment-eval/properties"
+    properties_path = f"data/fasb_preprocess-eval/properties"
     with open(properties_path, "r") as properties_file:
         json_data = json.load(properties_file)
 
