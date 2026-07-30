@@ -36,10 +36,8 @@ LOCAL_ENV = LocalEnvironment(processes=2)
 BW_ENV = BWUniEnvironment()
 
 ATTRIBUTES = [
-    "error",
-    "times",
-    Attribute("coverage", absolute=True, min_wins=False, scale="linear"),
-    Attribute("trivially_unsolvable", min_wins=False),
+    "total_time_ms",
+    "individual_times_ms",
 ]
 TIME_LIMIT = 1800
 MEMORY_LIMIT = 4096
