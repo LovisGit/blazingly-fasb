@@ -13,7 +13,7 @@ dependencies = [
 
 [package.metadata]
 requires-dist = [
-    { name = "fasb", editable = "../fasb" },
+    { name = "fasb", editable = "../../fasb" },
     { name = "lab" },
 ]
 
@@ -62,7 +62,7 @@ wheels = [
 [[package]]
 name = "fasb"
 version = "0.2.9"
-source = { editable = "../fasb" }
+source = { editable = "../../fasb" }
 
 [[package]]
 name = "fonttools"

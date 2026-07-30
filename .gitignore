@@ -223,5 +223,8 @@ test.lp
 .vscode/
 .python-version
 version_*.json
-# lab
+
+# lab / cluster
 data/
+cluster/benchmarks/lp/
+cluster/horizons.json
