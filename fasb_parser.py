@@ -5,9 +5,7 @@ from lab.parser import Parser
 
 def error(content, props):
     exit_code = props.get("planner_exit_code", -1)
-    if exit_code == 0:
-        props["error"] = "plan-found"
-    else:
+    if exit_code != 0:
         props["error"] = "unsolvable-or-error"
 
 

@@ -45,14 +45,10 @@ TIME_LIMIT = 1800
 MEMORY_LIMIT = 4096
 
 class FasbReport(AbsoluteReport):
-    INFO_ATTRIBUTES = ["time_limit", "memory_limit"]
+    INFO_ATTRIBUTES = ["time_limit", "memory_limit", "algorithm"]
     ERROR_ATTRIBUTES = [
-        "domain",
-        "problem",
-        "algorithm",
         "unexplained_errors",
         "error",
-        "node",
     ]
 
 fasb_exp = Experiment(environment=LOCAL_ENV)
