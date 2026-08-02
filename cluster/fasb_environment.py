@@ -8,7 +8,7 @@ class BWUniEnvironment(SlurmEnvironment):
     DEFAULT_QOS = "normal"
     DEFAULT_TIME_LIMIT_PER_TASK = "12:00:00"
     # 64 cores on cpu nodes, 236G usable memory
-    DEFAULT_MEMORY_PER_CPU = "3600M"
+    DEFAULT_MEMORY_PER_CPU = "16000M"
     # See slurm.conf
     MAX_TASKS = 1000
 

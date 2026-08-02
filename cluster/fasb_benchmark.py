@@ -31,16 +31,16 @@ def build_lp_suite():
 
 
 # For local testing
-LOCAL_ENV = LocalEnvironment(processes=2)
+#LOCAL_ENV = LocalEnvironment(processes=2)
 # For cluster testing
 BW_ENV = BWUniEnvironment()
 
 ATTRIBUTES = [
-    "total_time_ms",
-    "individual_times_ms",
+    Attribute("total_time_ms", min_wins=True, digits=2),
+    Attribute("individual_times_ms", min_wins=True, digits=2),
 ]
 TIME_LIMIT = 1800
-MEMORY_LIMIT = 4096
+MEMORY_LIMIT = 16000
 
 class FasbReport(AbsoluteReport):
     INFO_ATTRIBUTES = ["time_limit", "memory_limit", "algorithm"]
@@ -49,7 +49,7 @@ class FasbReport(AbsoluteReport):
         "error",
     ]
 
-fasb_exp = Experiment(environment=LOCAL_ENV)
+fasb_exp = Experiment(environment=BW_ENV)
 fasb_exp.add_parser(FasbParser())
 
 horizons = read_horizons()
