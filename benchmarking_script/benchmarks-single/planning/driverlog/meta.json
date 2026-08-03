@@ -1,0 +1,24 @@
+{
+  "description": "Driverlog STRIPS planning (PDDL→SAS+ via Fast Downward→ASP via plasp, bounded encoding). Trucks, drivers, and packages across locations. Horizon = plan-length bound. Light: p01 (h=8). Heavy: p04 (h=16, minimum SAT horizon, ~8s with inspect).",
+  "scripts": [
+    {"name": "inspect",            "path": "../../../scripts/inspect.fsb"},
+    {"name": "counts",             "path": "../../../scripts/counts.fsb"},
+    {"name": "enum",               "path": "../../../scripts/enum.fsb"},
+    {"name": "reason",             "path": "../../../scripts/reason.fsb"},
+    {"name": "navigate",           "path": "../../../scripts/navigate.fsb"},
+    {"name": "loop",               "path": "../../../scripts/loop.fsb"},
+    {"name": "all",                "path": "../../../scripts/all.fsb"},
+    {"name": "heavy",              "path": "../../../scripts/heavy.fsb"},
+    {"name": "unfair",             "path": "../../../scripts/unfair.fsb"},
+    {"name": "onlycounts",         "path": "../../../scripts/onlycounts.fsb"},
+    {"name": "single_cautious",    "path": "../../../scripts/single_cautious.fsb"},
+    {"name": "single_count",       "path": "../../../scripts/single_count.fsb"},
+    {"name": "single_counts",      "path": "../../../scripts/single_counts.fsb"},
+    {"name": "single_impossibles", "path": "../../../scripts/single_impossibles.fsb"},
+    {"name": "single_solvecount",  "path": "../../../scripts/single_solvecount.fsb"},
+    {"name": "single_solvecounts", "path": "../../../scripts/single_solvecounts.fsb"}
+  ],
+  "instances": [
+    {"size": 16, "program": "p04_h16.lp", "note": "problem 4, horizon 16"}
+  ]
+}
