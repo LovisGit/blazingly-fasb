@@ -1,5 +1,5 @@
 {
-  "description": "gripper PDDL, 8 balls (prob03). Optimal horizon 23; ~66 operators.",
+  "description": "Gripper planning: a two-armed robot carries 8 balls between two rooms.",
   "scripts": [
     {"name": "inspect",            "path": "../../../scripts/inspect.fsb"},
     {"name": "counts",             "path": "../../../scripts/counts.fsb"},

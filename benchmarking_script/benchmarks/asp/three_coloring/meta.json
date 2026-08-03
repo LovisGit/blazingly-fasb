@@ -1,5 +1,5 @@
 {
-  "description": "Pure ASP 3-coloring of a cycle C_n plus two fixed chord edges (1-4, 2-5). Size = N (nodes).",
+  "description": "Color a cycle graph with two extra chord edges using three colors so no adjacent nodes match.",
   "scripts": [
     {"name": "inspect",            "path": "../../../scripts/inspect.fsb"},
     {"name": "counts",             "path": "../../../scripts/counts.fsb"},

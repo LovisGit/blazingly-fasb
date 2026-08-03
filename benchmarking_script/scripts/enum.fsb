@@ -1,5 +1,4 @@
-// enum.fsb — answer-set enumeration commands (NEW word-based syntax).
-// Commands: solve n (enumerate n AS), solve (all AS), solve* (projected AS).
+// Enumerates answer sets; benchmarks solving cost.
 solve 1
 solve 5
 solve

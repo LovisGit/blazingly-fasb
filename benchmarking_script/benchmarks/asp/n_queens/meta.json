@@ -1,5 +1,5 @@
 {
-  "description": "Pure ASP n-queens. Size = N (board side). Answer-set count grows fast: N=7→40, N=8→92, N=9→352.",
+  "description": "Place N queens on an NxN board so none share a row, column, or diagonal.",
   "scripts": [
     {"name": "inspect",            "path": "../../../scripts/inspect.fsb"},
     {"name": "counts",             "path": "../../../scripts/counts.fsb"},

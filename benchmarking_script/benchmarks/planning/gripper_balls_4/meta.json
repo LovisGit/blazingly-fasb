@@ -1,5 +1,5 @@
 {
-  "description": "gripper PDDL, 4 balls (prob01). horizon is scale; h>=11 has plans.",
+  "description": "Gripper planning: a two-armed robot carries 4 balls between two rooms.",
   "scripts": [
     {"name": "inspect",            "path": "../../../scripts/inspect.fsb"},
     {"name": "counts",             "path": "../../../scripts/counts.fsb"},

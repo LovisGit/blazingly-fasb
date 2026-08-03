@@ -1,6 +1,4 @@
-// inspect.fsb — light read-only commands (NEW word-based syntax).
-// Baseline for "startup + cheap introspection" cost.
-// Commands: :atoms, facets, count, solvecount, :filter_atoms regex, :src.
+// Runs the cheap read-only commands; benchmarks startup and inspection.
 :atoms
 facets
 count

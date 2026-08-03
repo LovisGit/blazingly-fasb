@@ -1,5 +1,5 @@
 {
-  "description": "gripper PDDL, 6 balls (prob02). Heavier than balls_4: ~552 grounded lines.",
+  "description": "Gripper planning: a two-armed robot carries 6 balls between two rooms.",
   "scripts": [
     {"name": "inspect",            "path": "../../../scripts/inspect.fsb"},
     {"name": "counts",             "path": "../../../scripts/counts.fsb"},

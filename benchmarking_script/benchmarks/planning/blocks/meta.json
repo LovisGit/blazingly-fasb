@@ -1,5 +1,5 @@
 {
-  "description": "Blocks-world STRIPS planning (PDDL→ASP via plasp, bounded encoding). Horizon = plan-length bound; larger horizons admit more sub-optimal plans. Light: p04 (4 blocks, h≤10). Heavy: p10/p12/p13 (10-13 blocks, h≤24).",
+  "description": "Blocks-world planning: a robot arm restacks blocks into a goal tower.",
   "scripts": [
     {"name": "inspect",            "path": "../../../scripts/inspect.fsb"},
     {"name": "counts",             "path": "../../../scripts/counts.fsb"},

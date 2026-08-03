@@ -1,3 +1,4 @@
+// Repeats the facet-counts command; benchmarks it in isolation.
 counts
 counts
 counts

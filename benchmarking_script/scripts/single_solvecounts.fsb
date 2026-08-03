@@ -1,3 +1,4 @@
+// Repeats the answer-set counts command; benchmarks it in isolation.
 solvecounts
 solvecounts
 solvecounts

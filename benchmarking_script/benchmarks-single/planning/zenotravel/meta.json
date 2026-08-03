@@ -1,5 +1,5 @@
 {
-  "description": "Zeno-travel STRIPS planning (PDDL→SAS+ via Fast Downward→ASP via plasp, bounded encoding). Involves aircraft, passengers, cities, and fuel levels. Horizon = plan-length bound; larger values admit sub-optimal plans (exponentially more answer sets). Light: p01 (small). Heavy: p05 (h=20, ~13s with inspect).",
+  "description": "Zenotravel planning: aircraft fly passengers between cities while tracking fuel.",
   "scripts": [
     {"name": "inspect",            "path": "../../../scripts/inspect.fsb"},
     {"name": "counts",             "path": "../../../scripts/counts.fsb"},

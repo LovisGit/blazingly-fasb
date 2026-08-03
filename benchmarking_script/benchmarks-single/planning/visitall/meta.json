@@ -1,5 +1,5 @@
 {
-  "description": "Visit-all grid STRIPS planning (PDDL→ASP via plasp, bounded encoding). A robot visits every cell on an NxN grid. 'half' = start half-visited, 'full' = visit all cells. Horizon = plan-length bound.",
+  "description": "Visit-all planning: a robot must visit every cell of a grid.",
   "scripts": [
     {"name": "inspect",            "path": "../../../scripts/inspect.fsb"},
     {"name": "counts",             "path": "../../../scripts/counts.fsb"},

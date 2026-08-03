@@ -1,5 +1,5 @@
 {
-  "description": "Depot STRIPS planning (PDDL→SAS+ via Fast Downward→ASP via plasp, bounded encoding). Hoists move crates between pallets and trucks at depot/distributor locations. Horizon = plan-length bound. Light: p01 (h=10). Heavy: p05 (h=22).",
+  "description": "Depot planning: hoists load crates onto trucks that shuttle them between depot and distributor sites.",
   "scripts": [
     {"name": "inspect",            "path": "../../../scripts/inspect.fsb"},
     {"name": "counts",             "path": "../../../scripts/counts.fsb"},

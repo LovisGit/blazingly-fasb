@@ -1,4 +1,4 @@
-// heavy.fsb — only the computationally expensive commands.
+// Runs only the expensive commands; benchmarks worst-case cost.
 |=
 |= %
 |= %%

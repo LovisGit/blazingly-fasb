@@ -1,5 +1,5 @@
 {
-  "description": "logistics PDDL (LOGISTICS-4-0): 2 cities, 2 trucks, 1 plane, 6 packages. New domain — transportation/routing structure differs from gripper/blocks.",
+  "description": "Logistics planning: trucks move packages within cities and planes fly them between cities.",
   "scripts": [
     {"name": "inspect",            "path": "../../../scripts/inspect.fsb"},
     {"name": "counts",             "path": "../../../scripts/counts.fsb"},
