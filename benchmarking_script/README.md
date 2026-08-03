@@ -1,87 +1,131 @@
 # Benchmarker for fasb
 
-A small CLI for timing and profiling `fasb` runs across a set of test problems, so you can tell whether a change made things faster, slower, or hungrier for memory.
+A lightweight CLI for benchmarking fasb on different ASP problems.
 
-For each benchmark it drives `fasb` through a `.fsb` script a few times, throws away the first run or two as warmup, and records wall-clock time and RSS memory for the rest. Run it against two
-builds and diff the results with `compare` to get a per-benchmark and overall speed/memory delta.
+## Quickstart
 
-## Setup
+To generate a run
+```bash
+python benchmark.py run --benchmarks benchmarks --script enum --out runs/baseline.json
+```
+
+To display a run
+```bash
+python benchmark.py show runs/baseline.json
+```
+
+For comparison
+```bash
+python benchmark.py compare runs/baseline.json runs/current.json
+```
+
+
+## Preliminaries
+
+### Benchmarks
+
+Benchmarks can be added through a well-structured folder; the folder can be passed through `--benchmarks <dir>`. The benchmarks folder structure is expected as
+
+```
+|- <dir>
+|-- <subcategories>
+|--- <problem folder>
+|---- <problem file(s)>
+|---- meta.json
+|--- <other problem folder>
+|---- ...
+|-- ...
+```
+
+The meta.json provides insight into the scripts that can be used, as well as the problems and their horizons. The format is expected as
+
+```json
+{
+  "description": "<problem description>",
+  "scripts": [
+    {"name": "<script name>", "path": "<script path relative to pwd>"},
+    ...
+  ],
+  "instances": [
+    {"size": <horizon>, "program": "<problem file>"},
+    ...
+  ]
+}
+```
+
+The problems are expected in the `.lp` ASP format. Other problem types, like `.pddl`, need to be translated using tools such as plasp or planpilot.
+
+### Scripts
+
+!!! WARNING Only the explicitly passed script using `--script <script name>` is used; otherwise the benchmarker falls back to the first script listed in `meta.json`.
+
+The scripts folder contains `.fsb` scripts, compiled sequences of fasb commands.
+
+The CLI defaults to a folder named `scripts`; other directories can be passed using `--scripts-dir <dir>`.
+
+```
+|- <dir>
+|-- <.fsb script>
+|-- ..
+```
+
+It is also important to note that if a script is not listed in a problem's `meta.json`, it cannot be used.
+
+### Drivers
+
+!!! NOTE In order for the CLI to work you need a built binary of the fasb version you are trying to benchmark.
+
+Depending on the build, a different driver needs to be used. If the fasb build was done with the interpreter feature (`--features interpreter` in cargo build), the standard driver `--driver arg` (the one the CLI defaults to) can be used. Otherwise `--driver stdin` can be used, where the commands are passed one by one using standard input into REPL mode of fasb.
+
+## CLI Usage
+
+The CLI exposes three subcommands: `run`, `show`, and `compare`.
+
+### `run` — execute benchmarks
 
 ```bash
-python3 -m venv venv
-source venv/bin/activate
-pip install psutil
+python benchmark.py run [options]
 ```
 
-## How it's organized
+| Flag | Default | Description |
+|---|---|---|
+| `--benchmarks <dir>` | `benchmarks` | Benchmarks root directory |
+| `-k <n>` | `5` | Measured runs per instance |
+| `--warmup <n>` | `1` | Discarded warmup runs before measuring |
+| `--timeout <s>` | `60` | Per-run timeout in seconds; `0` disables the timeout |
+| `--out <path>` | `results.json` | Output JSON path |
+| `--fasb <path>` | searched on `PATH` | Path to the fasb binary |
+| `--fasb-args <str>` | none | Extra flags passed to fasb, split like a shell line, e.g. `--fasb-args='--fast -v'` (use `=` since the value starts with `-`, otherwise argparse mistakes it for another option) |
+| `--filter <regex>` | none | Only run problems whose `<domain>/<problem>` name matches |
+| `--script <name>` | first listed | Script variant from the `scripts` entry in `meta.json`, e.g. `all`, `enum`, `reason` |
+| `--scripts-dir <dir>` | path in `meta.json` | Override the script directory, keeping the chosen filename |
+| `--driver {arg,stdin}` | `arg` | How the script reaches fasb: `arg` for a positional file (interpreter builds), `stdin` for piping into the REPL (repl builds) |
+| `--min-output-bytes <n>` | `64` | Minimum stdout bytes required for a run to count as successful; guards against banner-only no-op runs |
+| `--clingo-models <n>` | `0` | Clingo model count passed to fasb (`0` = all) |
+| `--sample-hz <n>` | `200` | RSS memory sampling rate in Hz |
 
+Example, running only the ASP problems with the `enum` script and a 30s timeout:
+```bash
+python benchmark.py run --benchmarks benchmarks --filter 'asp/.*' --script enum -k 10 --timeout 30 --out runs/enum.json
 ```
-benchmarks/<domain>/<problem>/   problem definitions: meta.json + one or more .lp instances
-scripts/                         .fsb driver scripts, shared across all problems
-```
 
-Each problem directory (e.g. `benchmarks/planning/blocks/`) has a `meta.json` with:
-
-- a human-readable `description`
-- the `instances` to benchmark — `.lp` files, each with a `size` used for labeling and sorting
-- the named `scripts` it can be driven with, each just pointing at a `.fsb` file over in `scripts/`
-
-Every `meta.json` currently exposes the same 16 script variants: `inspect`, `counts`, `enum`, `reason`, `navigate`, `loop`, `all`, `heavy`, `unfair`, `onlycounts`, and six `single_*` scripts that hammer one command repeatedly (`single_cautious`, `single_count`, `single_counts`, `single_impossibles`, `single_solvecount`, `single_solvecounts`). Pick one at run time with `--script NAME`; leave it out and the first one listed (`inspect`) is used.
-
-If you're iterating on a script and don't want to edit every `meta.json` to try it, point `--scripts-dir DIR` at a folder containing a same-named file — it's used instead, only the filename from `meta.json` is looked up there.
-
-## Running benchmarks
+### `show` — display a saved results file
 
 ```bash
-python3 benchmark.py run --fasb /path/to/fasb
+python benchmark.py show <results.json> [--verbose]
 ```
 
-This walks `benchmarks/` (or whatever `--benchmarks DIR` you pass), runs every instance of every problem it finds, and writes the results to `results.json` (or `--out PATH`).
+- `results` — path to the results JSON (positional, required)
+- `--verbose`, `-v` — additionally print every individual run (wall time, peak RSS, exit status) instead of just the per-instance summary
 
-Flags worth knowing about:
-
-- `-k N` — measured runs per instance (default 5). Higher means less noise, but a longer run.
-- `--warmup N` — throwaway runs before the measured ones (default 1).
-- `--timeout SEC` — kill a run and its children if it takes longer than this (default 60s, `0`
-  disables the timeout).
-- `--filter REGEX` — only run problems whose `domain/problem` name matches. This is the only enable/disable mechanism there is right now — there's no per-benchmark flag in `meta.json` for it, just this regex. A few examples:
-- 
-```bash
---filter '^asp/'                      # only the asp domain
---filter '^planning/(blocks|depot)'   # just these two problems
---filter '^(?!planning/gripper)'      # everything except gripper
-```
-
-- `--script NAME` / `--scripts-dir DIR` — which driver script to use, as described above.
-- `--fasb-args='--flag1 --flag2'` — extra flags forwarded to `fasb` itself (use `=` since the value starts with `-`, or argparse will mistake it for another option).
-- `--driver arg|stdin` — how the script reaches `fasb`: as a file argument (`arg`, the default for interpreter builds) or piped into stdin (`stdin` — for REPL builds).
-- `--clingo-models N` — model count passed through to `fasb` (default `0` = all).
-- `--min-output-bytes N` — a run producing less stdout than this counts as a silent failure, not a real result (default 64 bytes — guards against a run that exits `0` but did nothing).
-- `--sample-hz N` — how often, per second, to poll the process's RSS while it's running (default 200). This is how peak/mean memory get measured.
-
-## Reading results
+### `compare` — diff two results files
 
 ```bash
-python3 benchmark.py show results.json -v
+python benchmark.py compare <baseline.json> <current.json> [--threshold <f>]
 ```
 
-Prints mean/median/stdev wall time and peak memory per instance. `-v` also breaks out every
-individual run.
+- `baseline` — path to the baseline results JSON (positional, required)
+- `current` — path to the current results JSON (positional, required)
+- `--threshold <f>` — default `0.05`; relative band (±) treated as noise rather than a real regression/improvement
 
-## Comparing two builds
-
-Say you want to know whether `version_b` is actually faster than `version_a`. Benchmark them
-separately first:
-
-```bash
-python3 benchmark.py run -k 5 --warmup 5 --out version_a.json --fasb ../path/to/version_a/target/release/fasb
-python3 benchmark.py run -k 5 --warmup 5 --out version_b.json --fasb ../path/to/version_b/target/release/fasb
-```
-
-Then diff them:
-
-```bash
-python3 benchmark.py compare version_a.json version_b.json
-```
-
-This prints a per-instance table (Δ wall time, Δ peak memory) plus an overall geometric-mean ratio across every instance — under 1.0 means the second build is faster/lighter, over 1.0 means it's slower/heavier. `--threshold 0.05` (the default) is how big a change has to be before it's flagged instead of written off as run-to-run noise.
+Reports, per matching `<benchmark, size>` pair, the change in mean wall time and peak memory between the two runs, followed by a geometric-mean summary across all instances.
