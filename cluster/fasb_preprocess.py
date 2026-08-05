@@ -10,7 +10,7 @@ from downward.parsers.single_search_parser import SingleSearchParser
 from downward.reports.absolute import AbsoluteReport
 from lab.environments import LocalEnvironment
 from lab.experiment import Experiment
-from lab.reports import Attribute
+from lab.reports import Attribute, geometric_mean
 
 from fasb_environment import BWUniEnvironment
 from fasb_parser import FasbParser
