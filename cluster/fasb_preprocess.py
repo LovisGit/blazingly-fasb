@@ -42,7 +42,7 @@ def extract_horizons():
 
 
 # For local testing
-LOCAL_ENV = LocalEnvironment(processes=2)
+#LOCAL_ENV = LocalEnvironment(processes=2)
 # For cluster testing
 BW_ENV = BWUniEnvironment()
 
@@ -55,7 +55,7 @@ ATTRIBUTES = [
     Attribute("trivially_unsolvable", min_wins=False),
 ]
 TIME_LIMIT = 1800
-MEMORY_LIMIT = 4096
+MEMORY_LIMIT = 16000
 
 class PreprocessReport(AbsoluteReport):
     INFO_ATTRIBUTES = ["time_limit", "memory_limit"]
@@ -71,7 +71,7 @@ class PreprocessReport(AbsoluteReport):
 horizons = {}
 
 
-preprocess_exp = Experiment(environment=LOCAL_ENV)
+preprocess_exp = Experiment(environment=BW_ENV)
 preprocess_exp.add_parser(ExitcodeParser())
 preprocess_exp.add_parser(SingleSearchParser())
 
