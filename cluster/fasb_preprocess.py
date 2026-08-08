@@ -22,8 +22,16 @@ def collect_lp_files():
     for f in files:
         os.remove(f)
 
+    with open(HORIZONS_FILE, "r") as horizons_file:
+        horizons = json.load(horizons_file)
+
     for run_dir in glob.glob("data/fasb_preprocess/runs-*/*/"):
         for lp in glob.glob(f"{run_dir}/*.pddl.lp"):
+            
+            horizon = horizons.get(lp.replace(".pddl.lp", ".lp"), None)
+            if horizon == None or not isinstance(horizon, int):
+                continue
+
             out_name = lp.replace(".pddl.lp", ".lp")
             shutil.copy(lp, f"benchmarks/lp/{os.path.basename(out_name)}")
 
@@ -33,7 +41,11 @@ def extract_horizons():
         json_data = json.load(properties_file)
 
         for run in json_data:
-            horizon = json_data[run]["plan_length"]
+            horizon = json_data[run].get("plan_length", None)
+            
+            if horizon == None:
+                continue
+
             lp_run_name = run.replace(".pddl", ".lp")
             horizons[lp_run_name] = horizon
 
@@ -54,7 +66,7 @@ ATTRIBUTES = [
     Attribute("evaluations", function=geometric_mean),
     Attribute("trivially_unsolvable", min_wins=False),
 ]
-TIME_LIMIT = 1800
+TIME_LIMIT = 3600
 MEMORY_LIMIT = 16000
 
 class PreprocessReport(AbsoluteReport):
@@ -106,24 +118,24 @@ for task in suites.build_suite(PDDL_BENCHMARKS_DIR, SUITE):
     run.set_property("algorithm", "astar-lmcut")
     run.set_property("id", [task.problem])
 
-# Add step that writes experiment files to disk.
+# 1. Add step that writes experiment files to disk.
 preprocess_exp.add_step("build", preprocess_exp.build)
 
-# Add step that executes all runs.
+# 2. Add step that executes all runs.
 preprocess_exp.add_step("start", preprocess_exp.start_runs)
 
-# Add step that parses log output into "properties" files.
+# 3. Add step that parses log output into "properties" files.
 preprocess_exp.add_step("parse", preprocess_exp.parse)
 
-# Add step that collects properties from run directories and
+# 4. Add step that collects properties from run directories and
 # writes them to *-eval/properties.
 preprocess_exp.add_fetcher(name="fetch")
 
-# Collect lp files
-preprocess_exp.add_step("collect", collect_lp_files)
-
-# Extract horizons
+# 5. Extract horizons
 preprocess_exp.add_step("horizons", extract_horizons)
+
+# 6. Collect lp files
+preprocess_exp.add_step("collect", collect_lp_files)
 
 # Parse the commandline and run the specified steps.
 preprocess_exp.run_steps()
