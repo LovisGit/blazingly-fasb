@@ -28,12 +28,13 @@ def collect_lp_files():
     for run_dir in glob.glob("data/fasb_preprocess/runs-*/*/"):
         for lp in glob.glob(f"{run_dir}/*.pddl.lp"):
             
-            horizon = horizons.get(lp.replace(".pddl.lp", ".lp"), None)
+            lp_base_file_name = os.path.basename(lp).replace(".pddl.lp", ".lp")
+            horizon = horizons.get(lp_base_file_name, None)
+
             if horizon == None or not isinstance(horizon, int):
                 continue
 
-            out_name = lp.replace(".pddl.lp", ".lp")
-            shutil.copy(lp, f"benchmarks/lp/{os.path.basename(out_name)}")
+            shutil.copy(lp, f"benchmarks/lp/{lp_base_file_name}")
 
 def extract_horizons():
     properties_path = f"data/fasb_preprocess-eval/properties"
