@@ -24,7 +24,7 @@ python benchmark.py compare runs/baseline.json runs/current.json
 
 ### Benchmarks
 
-Benchmarks can be added through a well-structured folder; the folder can be passed through `--benchmarks <dir>`. The benchmarks folder structure is expected as
+Benchmarks can be added through a well-structured folder: the folder can be passed through `--benchmarks <dir>`. The benchmarks folder structure is expected as
 
 ```
 |- <dir>
@@ -81,7 +81,7 @@ Depending on the build, a different driver needs to be used. If the fasb build w
 
 The CLI exposes three subcommands: `run`, `show`, and `compare`.
 
-### `run` — execute benchmarks
+### `run` - execute benchmarks
 
 ```bash
 python benchmark.py run [options]
@@ -104,28 +104,28 @@ python benchmark.py run [options]
 | `--clingo-models <n>` | `0` | Clingo model count passed to fasb (`0` = all) |
 | `--sample-hz <n>` | `200` | RSS memory sampling rate in Hz |
 
-Example, running only the ASP problems with the `enum` script and a 30s timeout:
+Example, running only the ASP problems with the `enum` script, 10 runs per problem and a 30s timeout:
 ```bash
 python benchmark.py run --benchmarks benchmarks --filter 'asp/.*' --script enum -k 10 --timeout 30 --out runs/enum.json
 ```
 
-### `show` — display a saved results file
+### `show` - display a saved results file
 
 ```bash
 python benchmark.py show <results.json> [--verbose]
 ```
 
-- `results` — path to the results JSON (positional, required)
-- `--verbose`, `-v` — additionally print every individual run (wall time, peak RSS, exit status) instead of just the per-instance summary
+- `results` - path to the results JSON (positional, required)
+- `--verbose`, `-v` - additionally print every individual run (wall time, peak RSS, exit status) instead of just the per-instance summary
 
-### `compare` — diff two results files
+### `compare` - diff two results files
 
 ```bash
 python benchmark.py compare <baseline.json> <current.json> [--threshold <f>]
 ```
 
-- `baseline` — path to the baseline results JSON (positional, required)
-- `current` — path to the current results JSON (positional, required)
-- `--threshold <f>` — default `0.05`; relative band (±) treated as noise rather than a real regression/improvement
+- `baseline` - path to the baseline results JSON (positional, required)
+- `current` - path to the current results JSON (positional, required)
+- `--threshold <f>` - default `0.05`; relative band (±) treated as noise rather than a real regression/improvement
 
 Reports, per matching `<benchmark, size>` pair, the change in mean wall time and peak memory between the two runs, followed by a geometric-mean summary across all instances.
